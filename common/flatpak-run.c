@@ -3263,9 +3263,10 @@ flatpak_run_app (FlatpakDecomposed   *app_ref,
 
       GFile* nix_files = g_file_get_child(app_files, "nix");
 
-      if (g_file_query_exists(nix_files)) {
+      if (g_file_query_exists(nix_files, NULL)) {
           flatpak_bwrap_add_args(bwrap,
-                                 "--ro-bind", flatpak_file_get_path_cached(nix_files), "/nix",
+                                 "--overlay-src", flatpak_file_get_path_cached(nix_files),
+                                 "--ro-overlay", "/nix",
                                  NULL);
       }
 
